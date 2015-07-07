@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="musicStore">
+    <head>
+        <!--<meta charset="UTF-8">-->
+        <title>Webshop</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    </head>    
+    <body ng-controller="StoreController as store">
+        <div ng-controller="CartController as cartCtrl">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+              <div class="container">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">Joy-Project - Webshop</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                  <form class="navbar-form navbar-right">
+                    <!--<div class="form-group">
+                      <input type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>-->
+                    <div class="form-group">
+                        <span class="cartItems badge" ng-click="angular.element('#modalCart').modal('show')"><span>{{cartCtrl.cart.products.length}}</span> items - {{cartCtrl.cart.totalPrice | currency:'&euro; '}}</span></span>
+                        <a class="btn btn-default simpleCart_checkout" data-toggle="modal" data-target="#modalCart"><i class="glyphicon glyphicon-shopping-cart"></i> Checkout</a>
+                    </div>
+                  </form>
+                </div><!--/.navbar-collapse -->
+              </div>
+            </nav>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">In winkelwagen</h4>
+                  </div>
+                  <div class="modal-body">
+                    <cart-content></cart-content>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="cartCtrl.cartCheckOutPayPal();">Afrekenen</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main jumbotron for a primary marketing message or call to action -->
+            <div class="jumbotron">
+              <div class="container">
+                <h1>Hello, listeners!</h1>
+                <p>Here you can purchase our music by ordering and downloading it.</p>
+              </div>
+            </div>
+
+            <div class="container">
+              <!-- Example row of columns -->
+              <div class="row">
+                <div ng-repeat="product in store.products" class="simpleCart_shelfItem col-md-4">
+                  <h2 class="item_name">{{product.artist}} - {{product.title}}</h2>
+                  <p><!--<input type="text" value="1" class="item_Quantity"><br>-->
+                     <span class="item_price">{{product.price | currency:'&euro; '}}</span><br></p>
+                  <p><form name="cartForm" ng-submit="cartCtrl.addProductToCart(product)">
+                    <a class="btn btn-default" href="{{product.soundcloudURL}}" target="_blank"><i class="glyphicon glyphicon-headphones"></i></a>
+                     <input type="submit" class="btn btn-primary" value="Add to Cart"><form></p>
+                </div>
+              </div>
+
+              <hr>
+
+              <footer>
+                <p>&copy; JHYH 2015</p>
+              </footer>
+            </div> <!-- /container -->
+        </div>
+    </body>
+</html>
