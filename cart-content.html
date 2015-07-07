@@ -1,0 +1,20 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Omschrijving</th>
+            <th>Prijs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="product in cartCtrl.cart.products">
+            <td>{{product.artist}} - {{product.title}}</td>
+            <td>{{product.price | currency:'&euro; '}}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><b>Totaal:</b></td>
+            <td>{{cartCtrl.cart.totalPrice | currency:'&euro; '}}</td>
+        </tr>
+    </tfoot>
+</table>

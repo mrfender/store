@@ -1,0 +1,26 @@
+[
+    { 
+        "id": "2012022301",
+        "artist": "Yldau", 
+        "title": "Fjoer", 
+        "price": 0.90, 
+        "downloadURL": "download.php", 
+        "soundcloudURL": "https://soundcloud.com/joy-project/fjoer-liet-2012" 
+    },
+    { 
+        "id": "2011122101",
+        "artist": "JoY-project", 
+        "title": "Hold on", 
+        "price": 0.90, 
+        "downloadURL": "download.php", 
+        "soundcloudURL": "https://soundcloud.com/joy-project/holdon" 
+    },
+    { 
+        "id": "2010081801",
+        "artist": "JoY-project", 
+        "title": "Love song", 
+        "price": 0.95, 
+        "downloadURL": "download.php", 
+        "soundcloudURL": "https://soundcloud.com/joy-project/love-song" 
+    }
+]
