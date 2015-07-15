@@ -5,10 +5,10 @@
         var store = this;
         store.products = [];
         
-        $http.get('products.json').success(function(data) {
+        $http.get('products.php').success(function(data) {
             store.products = data;
         });
-        $http.get('products.json').error(function() {
+        $http.get('products.php').error(function() {
             store.products = music;
         });
     }]);
@@ -25,16 +25,27 @@
         this.cart.products = [];
         this.cart.totalPrice = 0;
         
-        this.addProductToCart = function(product){
+        this.showCart = function(modalID) {
+            $('#'+ modalID).modal('show');
+        };
+        
+        this.hideCart = function(modalID) {
+            $('#'+ modalID).modal('hide');
+        };
+        
+        this.addProductToCart = function(product) {
             if ( !this.cartContainsProduct(product) ) {
-                this.cart.products.push(product);
-                this.cart.totalPrice += product.price;
+                alert(product.price);
+                this.cart.totalPrice += parseFloat(product.price);
             }
         };
         
         this.removeProductFormCart = function(product) {
             this.cart.products.pop(product);
-            this.cart.totalPrice -= product.price;
+            this.cart.totalPrice -= parseFloat(product.price);
+            if ( this.cart.products.length == 0 ) {
+                this.hideCart("modalCart");
+            }
         };
         
         this.cartContainsProduct = function(product) {

@@ -3,18 +3,21 @@
         <tr>
             <th>Omschrijving</th>
             <th>Prijs</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="product in cartCtrl.cart.products">
             <td>{{product.artist}} - {{product.title}}</td>
             <td>{{product.price | currency:'&euro; '}}</td>
+            <td><button type="button" class="btn btn-default" ng-click="cartCtrl.removeProductFormCart(product);">-</button></td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
             <td><b>Totaal:</b></td>
             <td>{{cartCtrl.cart.totalPrice | currency:'&euro; '}}</td>
+            <td></td>
         </tr>
     </tfoot>
 </table>

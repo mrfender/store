@@ -32,7 +32,7 @@
                     </div>
                     <button type="submit" class="btn btn-success">Sign in</button>-->
                     <div class="form-group">
-                        <span class="cartItems badge" ng-click="angular.element('#modalCart').modal('show')"><span>{{cartCtrl.cart.products.length}}</span> items - {{cartCtrl.cart.totalPrice | currency:'&euro; '}}</span></span>
+                        <span class="cartItems badge" ng-click="cartCtrl.showCart(modalCart);"><span>{{cartCtrl.cart.products.length}}</span> items - {{cartCtrl.cart.totalPrice | currency:'&euro; '}}</span></span>
                         <a class="btn btn-default simpleCart_checkout" data-toggle="modal" data-target="#modalCart"><i class="glyphicon glyphicon-shopping-cart"></i> Checkout</a>
                     </div>
                   </form>
@@ -72,8 +72,7 @@
               <div class="row">
                 <div ng-repeat="product in store.products" class="simpleCart_shelfItem col-md-4">
                   <h2 class="item_name">{{product.artist}} - {{product.title}}</h2>
-                  <p><!--<input type="text" value="1" class="item_Quantity"><br>-->
-                     <span class="item_price">{{product.price | currency:'&euro; '}}</span><br></p>
+                  <p><span class="item_price">{{product.price | currency:'&euro; '}}</span><br></p>
                   <p><form name="cartForm" ng-submit="cartCtrl.addProductToCart(product)">
                     <a class="btn btn-default" href="{{product.soundcloudURL}}" target="_blank"><i class="glyphicon glyphicon-headphones"></i></a>
                      <input type="submit" class="btn btn-primary" value="Add to Cart"><form></p>
