@@ -10,5 +10,15 @@
     //$fetch = $mysqli->query("SELECT productID, identifier, artist, title, price, listenURL AS soundcloudURL FROM products");
     
     print_r($_POST);
+    
+    
+    /*
+        http://www.example.com/ipnListener/ipn-Listener.php
+        https://developer.paypal.com/docs/classic/ipn/ht_ipn/
+    
+    
+    
+    
+    */
 
 ?>

@@ -1,5 +1,5 @@
 (function(){
-    var app = angular.module('musicStore', []);
+    var app = angular.module('musicStore', ['ch.filters']);
 
     app.controller('StoreController', ['$http', function($http) {
         var store = this;
@@ -35,7 +35,7 @@
         
         this.addProductToCart = function(product) {
             if ( !this.cartContainsProduct(product) ) {
-                alert(product.price);
+                this.cart.products.push(product);
                 this.cart.totalPrice += parseFloat(product.price);
             }
         };
