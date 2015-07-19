@@ -67,6 +67,7 @@
     // STEP 3: Inspect IPN validation result and act accordingly
 
     if (strcmp ($res, "VERIFIED") == 0) {
+        $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(0, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'valid request');");
         // The IPN is verified, process it:
         // check whether the payment_status is Completed
         // check that txn_id has not been previously processed
@@ -92,6 +93,7 @@
         $qResult = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id';");
         
         if ( $qResult->num_rows == 0 ) {
+            $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(0, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'geen rijen bij SELECT * FROM tokens WHERE txnID=$txn_id');");
             if ( $item_number ) {
                 $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($item_number, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
             }
@@ -108,9 +110,13 @@
                 } 
             }
         }
+        else {
+            $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(0, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '". $qResult->num_rows ." rijen bij SELECT * FROM tokens WHERE txnID=$txn_id');");
+        }
         
     } 
     else if (strcmp ($res, "INVALID") == 0) {
+        $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(0, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'invalid request');");
         // IPN invalid, log for manual investigation
         echo "The response from IPN was: <b>" .$res ."</b>";
     }
