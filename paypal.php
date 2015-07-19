@@ -91,14 +91,14 @@
 
         $qResult = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id';");
         
-        if ( mysqli_num_rows->($qResult) == 0 ) {
+        if ( $qResult->num_rows == 0 ) {
             $cIdx = 1;
             // IPN message values depend upon the type of notification sent.
             // To loop through the &_POST array and print the NV pairs to the screen:
             foreach($_POST as $key => $value) {
                 //echo $key." = ". $value."<br>";
                 if ( $key == "item_name".$cIdx ) {
-                  $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($value, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
+                    $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($value, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
                 }
             } 
         }
