@@ -97,7 +97,7 @@
             // To loop through the &_POST array and print the NV pairs to the screen:
             foreach($_POST as $key => $value) {
                 //echo $key." = ". $value."<br>";
-                if ( $key == "item_name".$cIdx ) {
+                if ( $key == "item_name_".$cIdx ) {
                     $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($value, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
                 }
             } 
