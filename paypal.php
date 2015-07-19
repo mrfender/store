@@ -67,6 +67,11 @@
     // STEP 3: Inspect IPN validation result and act accordingly
 
     if (strcmp ($res, "VERIFIED") == 0) {
+        $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+        if ($mysqli->connect_errno) {
+            echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+        }
+        
         $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(0, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'valid request');");
         // The IPN is verified, process it:
         // check whether the payment_status is Completed
@@ -84,11 +89,6 @@
         $txn_id = $_POST['txn_id'];
         $receiver_email = $_POST['receiver_email'];
         $payer_email = $_POST['payer_email'];
-
-        $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-        if ($mysqli->connect_errno) {
-            echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-        }
 
         $qResult = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id';");
         
