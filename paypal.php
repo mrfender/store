@@ -55,7 +55,7 @@
     // In wamp-like environments that do not come bundled with root authority certificates,
     // please download 'cacert.pem' from "http://curl.haxx.se/docs/caextract.html" and set 
     // the directory path of the certificate as shown below:
-    // curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cacert.pem');
+    curl_setopt($ch, CURLOPT_CAINFO, 'cacert.pem');
     if( !($res = curl_exec($ch)) ) {
         // error_log("Got " . curl_error($ch) . " when processing IPN data");
         curl_close($ch);
