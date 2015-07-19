@@ -57,7 +57,7 @@
     // the directory path of the certificate as shown below:
     curl_setopt($ch, CURLOPT_CAINFO, 'cacert.pem');
     if( !($res = curl_exec($ch)) ) {
-        // error_log("Got " . curl_error($ch) . " when processing IPN data");
+        error_log("Got " . curl_error($ch) . " when processing IPN data");
         curl_close($ch);
         exit;
     }
