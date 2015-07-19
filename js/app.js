@@ -78,7 +78,7 @@
                 data["item_number_" + ctr] = item.id;
                 data["item_name_" + ctr] = item.artist +"-"+ item.title;
                 data["quantity_" + ctr] = 1;
-                data["amount_" + ctr] = item.price.toFixed(2);                
+                data["amount_" + ctr] = parseFloat(item.price).toFixed(2);
             }
 
             // build form
