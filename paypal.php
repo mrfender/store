@@ -72,7 +72,7 @@
             echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         }
         
-        $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(0, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'valid request');");
+        $rResult = $mysqli->query("INSERT INTO tokens(productID, txnID) VALUES(0, 'valid request')");
         // The IPN is verified, process it:
         // check whether the payment_status is Completed
         // check that txn_id has not been previously processed
