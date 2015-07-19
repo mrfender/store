@@ -10,15 +10,8 @@
     
     
     //$paypalURL = 'https://www.paypal.com/cgi-bin/webscr';
-    $paypalURL = 'https://www.paypal.com/cgi-bin/webscr';
+    $paypalURL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
     
-    
-    /*$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-    if ($mysqli->connect_errno) {
-        echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-    }*/
-
-    //$fetch = $mysqli->query("SELECT productID, identifier, artist, title, price, listenURL AS soundcloudURL FROM products");
     
     // STEP 1: read POST data
 
@@ -91,12 +84,27 @@
         $receiver_email = $_POST['receiver_email'];
         $payer_email = $_POST['payer_email'];
 
-        // IPN message values depend upon the type of notification sent.
-        // To loop through the &_POST array and print the NV pairs to the screen:
-        foreach($_POST as $key => $value) {
-          echo $key." = ". $value."<br>";
+        $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+        if ($mysqli->connect_errno) {
+            echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         }
-    } else if (strcmp ($res, "INVALID") == 0) {
+
+        $qResult = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id';");
+        
+        if ( mysqli_num_rows->($qResult) == 0 ) {
+            $cIdx = 1;
+            // IPN message values depend upon the type of notification sent.
+            // To loop through the &_POST array and print the NV pairs to the screen:
+            foreach($_POST as $key => $value) {
+                //echo $key." = ". $value."<br>";
+                if ( $key == "item_name".$cIdx ) {
+                  $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($value, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
+                }
+            } 
+        }
+        
+    } 
+    else if (strcmp ($res, "INVALID") == 0) {
         // IPN invalid, log for manual investigation
         echo "The response from IPN was: <b>" .$res ."</b>";
     }
