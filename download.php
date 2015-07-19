@@ -1,6 +1,6 @@
 <?php
 
-    echo "<br><Br>POST:";
+    /*echo "<br><Br>POST:";
     print_r("$_POST");
     
     echo "<br><Br>GET:";
@@ -33,6 +33,10 @@
     // iterate through the results
     foreach ($cursor as $document) {
         echo $document["filename"] . "\n";
-    }
+    }*/
+    
+    echo "download page";
+    
+    print_r($_POST);
 
 ?>
