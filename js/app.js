@@ -68,7 +68,8 @@
                 upload: "1",
                 rm: "2",
                 charset: "utf-8",
-                currency_code: "EUR"
+                currency_code: "EUR",
+                notify_url: "https://joyproject-joystore.rhcloud.com/paypal.php"
             };
 
             // item data
