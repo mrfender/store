@@ -55,7 +55,7 @@
     // In wamp-like environments that do not come bundled with root authority certificates,
     // please download 'cacert.pem' from "http://curl.haxx.se/docs/caextract.html" and set 
     // the directory path of the certificate as shown below:
-    curl_setopt($ch, CURLOPT_CAINFO, 'cacert.pem');
+    //curl_setopt($ch, CURLOPT_CAINFO, 'cacert.pem');
     if( !($res = curl_exec($ch)) ) {
         error_log("Got " . curl_error($ch) . " when processing IPN data");
         curl_close($ch);
@@ -67,12 +67,18 @@
     // STEP 3: Inspect IPN validation result and act accordingly
 
     if (strcmp ($res, "VERIFIED") == 0) {
+        error_log("VERIFIED when processing IPN data");
+        
+        error_log("try to connect to database");
         $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
         if ($mysqli->connect_errno) {
-            echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+            error_log("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
         }
         
+        error_log("Connected");
+        error_log("Query: INSERT INTO tokens(productID, txnID) VALUES(0, 'valid request')");
         $rResult = $mysqli->query("INSERT INTO tokens(productID, txnID) VALUES(0, 'valid request')");
+        error_log($rResult . " inserted empty token");
         // The IPN is verified, process it:
         // check whether the payment_status is Completed
         // check that txn_id has not been previously processed
