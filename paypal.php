@@ -91,14 +91,9 @@
         $receiver_email = $_POST['receiver_email'];
         $payer_email = $_POST['payer_email'];
 
-        error_log("POST: ". implode(" ; ", $_POST));
-        
-        error_log("Query: SELECT * FROM tokens WHERE txnID='$txn_id'");
         $qResult = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id'");
-        error_log("Query rows: ". $qResult->num_rows);
         
         if ( $qResult->num_rows == 0 ) {
-            $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(1, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'geen rijen bij SELECT * FROM tokens WHERE txnID=$txn_id');");
             if ( $item_number ) {
                 $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($item_number, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
             }
@@ -107,11 +102,11 @@
                 // IPN message values depend upon the type of notification sent.
                 // To loop through the &_POST array and print the NV pairs to the screen:
                 foreach($_POST as $key => $value) {
-                    //echo $key." = ". $value."<br>";
-                    if ( $key == "item_number_".$cIdx ) {
+                    //error_log($key." = ". $value);
+                    if ( $key == "item_number_". $cIdx ) {
                         $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($value, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
+                        $cIdx++;
                     }
-                    $cIdx++;
                 } 
             }
         }
