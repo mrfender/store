@@ -67,18 +67,13 @@
     // STEP 3: Inspect IPN validation result and act accordingly
 
     if (strcmp ($res, "VERIFIED") == 0) {
-        error_log("VERIFIED when processing IPN data");
-        
-        error_log("try to connect to database");
         $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
         if ($mysqli->connect_errno) {
             error_log("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
         }
         
-        error_log("Connected");
-        error_log("Query: INSERT INTO tokens(productID, txnID) VALUES(0, 'valid request')");
-        $rResult = $mysqli->query("INSERT INTO tokens(productID, txnID) VALUES(0, 'valid request')");
-        error_log($rResult . " inserted empty token");
+        $rResult = $mysqli->query("INSERT INTO tokens(productID, txnID) VALUES(1, 'valid request')");
+
         // The IPN is verified, process it:
         // check whether the payment_status is Completed
         // check that txn_id has not been previously processed
@@ -96,10 +91,14 @@
         $receiver_email = $_POST['receiver_email'];
         $payer_email = $_POST['payer_email'];
 
-        $qResult = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id';");
+        error_log("POST: ". implode(" ; ", $_POST));
+        
+        error_log("Query: SELECT * FROM tokens WHERE txnID='$txn_id'");
+        $qResult = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id'");
+        error_log("Query rows: ". $qResult->num_rows);
         
         if ( $qResult->num_rows == 0 ) {
-            $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(0, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'geen rijen bij SELECT * FROM tokens WHERE txnID=$txn_id');");
+            $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(1, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'geen rijen bij SELECT * FROM tokens WHERE txnID=$txn_id');");
             if ( $item_number ) {
                 $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($item_number, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
             }
@@ -117,12 +116,12 @@
             }
         }
         else {
-            $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(0, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '". $qResult->num_rows ." rijen bij SELECT * FROM tokens WHERE txnID=$txn_id');");
+            $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(1, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '". $qResult->num_rows ." rijen bij SELECT * FROM tokens WHERE txnID=$txn_id');");
         }
         
     } 
     else if (strcmp ($res, "INVALID") == 0) {
-        $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(0, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'invalid request');");
+        $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(1, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'invalid request');");
         // IPN invalid, log for manual investigation
         echo "The response from IPN was: <b>" .$res ."</b>";
     }
