@@ -78,10 +78,10 @@
             for (var i = 0; i < this.cart.products.length; i++) {
                 var item = this.cart.products[i];
                 var ctr = i + 1;
-                data["item_number" + ctr] = item.id;
-                data["item_name" + ctr] = item.artist +"-"+ item.title;
-                data["quantity" + ctr] = 1;
-                data["amount" + ctr] = parseFloat(item.price).toFixed(2);
+                data["item_number_" + ctr] = item.id;
+                data["item_name_" + ctr] = item.artist +"-"+ item.title;
+                data["quantity_" + ctr] = 1;
+                data["amount_" + ctr] = parseFloat(item.price).toFixed(2);
             }
 
             // build form
