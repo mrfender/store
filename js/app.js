@@ -78,7 +78,7 @@
             for (var i = 0; i < this.cart.products.length; i++) {
                 var item = this.cart.products[i];
                 var ctr = i + 1;
-                data["item_number_" + ctr] = item.id;
+                data["item_number_" + ctr] = item.productID;
                 data["item_name_" + ctr] = item.artist +"-"+ item.title;
                 data["quantity_" + ctr] = 1;
                 data["amount_" + ctr] = parseFloat(item.price).toFixed(2);
