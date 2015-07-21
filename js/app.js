@@ -69,9 +69,9 @@
                 rm: "2",
                 charset: "utf-8",
                 currency_code: "EUR",
-                notify_url: "https://joyproject-joystore.rhcloud.com/paypal.php",
-                'return': "https://joyproject-joystore.rhcloud.com/download.php",
-                cancel_return: "https://joyproject-joystore.rhcloud.com/cancel.php"
+                'notify_url': "http://joyproject-joystore.rhcloud.com/paypal.php",
+                'return': "http://joyproject-joystore.rhcloud.com/download.php",
+                'cancel_return': "http://joyproject-joystore.rhcloud.com/cancel.php"
             };
 
             // item data
