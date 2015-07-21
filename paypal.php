@@ -100,21 +100,17 @@
                 // IPN message values depend upon the type of notification sent.
                 // To loop through the &_POST array and print the NV pairs to the screen:
                 foreach($_POST as $key => $value) {
-                    error_log($key." = ". $value);
-                    if ( $key == "item_number_". $cIdx ) {
+                    //error_log($key." = ". $value);
+                    if ( $key == "item_number". $cIdx ) {
                         $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($value, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
                         $cIdx++;
                     }
                 } 
             }
         }
-        else {
-            $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(1, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '". $qResult->num_rows ." rijen bij SELECT * FROM tokens WHERE txnID=$txn_id');");
-        }
-        
     } 
     else if (strcmp ($res, "INVALID") == 0) {
-        $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES(1, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, 'invalid request');");
+        error_log('invalid request');
         // IPN invalid, log for manual investigation
         echo "The response from IPN was: <b>" .$res ."</b>";
     }
