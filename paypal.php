@@ -100,7 +100,7 @@
                 // IPN message values depend upon the type of notification sent.
                 // To loop through the &_POST array and print the NV pairs to the screen:
                 foreach($_POST as $key => $value) {
-                    //error_log($key." = ". $value);
+                    error_log($key." = ". $value);
                     if ( $key == "item_number". $cIdx ) {
                         $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($value, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
                         $cIdx++;
