@@ -70,7 +70,7 @@
             while($r = mysqli_fetch_assoc($fetch)) {
               echo "<div class='col-md-4'>";
               echo "<h2 class='item_name'>". $r["artist"] ." - ". $r["title"] ."</h2>";
-              echo "<p><a class='btn btn-primary' href='download_action.php?txn_id=$txn_id&product_id=". $r["productID"] ."' target='_blank'><i class='glyphicon glyphicon-download-alt'></i></a></p>";
+              echo "<p><a class='btn btn-primary' href='download_action.php?txn_id=$txn_id&product_id=". $r["productID"] ."' target='_blank'><i class='glyphicon glyphicon-download-alt'></i> Download</a></p>";
               echo "</div>";
             }
         }
