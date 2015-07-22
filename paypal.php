@@ -7,6 +7,7 @@
     
 
     include("config.php");
+    include("includes/mail.php");
     
     
     //$paypalURL = 'https://www.paypal.com/cgi-bin/webscr';
@@ -92,6 +93,18 @@
         $qResult = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id'");
         
         if ( $qResult->num_rows == 0 ) {
+            // e-mail versturen
+            $ms = new MailSender();
+            $ms->setSubject($subject);
+            //echo "check subject $subject<br>";
+            //$ms->setSender($emailFrom, $nameFrom);
+            $ms->setSender($emailFrom);
+            //echo "check email $email name $name<br>";
+            //echo "check receiver $receiver $receiverName<br>";
+            $ms->setReceiver($receiver, $receiverName);
+            //echo "check message $message<br>";
+            $ms->sendMultipartMail($message, nl2br($message));
+            
             if ( $item_number ) {
                 $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($item_number, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
             }

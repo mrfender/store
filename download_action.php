@@ -17,30 +17,8 @@
             $r = mysqli_fetch_assoc($fetch);
             $mysqli->query("UPDATE tokens SET downloads=downloads+1 WHERE productID='$product_id' AND txnID='$txn_id'");
             
-            //echo $r["downloadURL"];
-            
-            /*file_put_contents("test.mp3", fopen($r["downloadURL"], 'r'));
-            
-            header("Content-Type: application/force-download");
-            header("Content-Type: application/octet-stream");
-            header("Content-Type: application/download");
-            header("Content-Disposition: attachment;filename=/test.mp3");
-            header("Content-Transfer-Encoding: binary ");*/
-            
-            
-            
-            set_time_limit(0); // unlimited max execution time
-            $options = array(
-              CURLOPT_TIMEOUT =>  28800, // set this to 8 hours so we dont timeout on big files
-              CURLOPT_URL     => $r["downloadURL"],
-            );
-
-            $ch = curl_init();
-            curl_setopt_array($ch, $options);
-            curl_exec($ch);
-            curl_close($ch);
-            
-            //file_put_contents("Tmpfile.mp3", $r["downloadURL"]);
+            $fileURL = $r["downloadURL"];
+            header("location: $fileURL");
         }
     }
 ?>
