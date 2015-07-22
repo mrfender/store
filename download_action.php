@@ -1,11 +1,12 @@
 <?php
 
+    include("includes/functions.php");
     include("config.php");
     
-    $txn_id = $_POST['txn_id'];
-    $product_id = $_POST['product_id'];
+    $txn_id = getPOSTGETvar('txn_id');
+    $product_id = getPOSTGETvar('product_id');
     
-    if ( $_POST['download'] && $txn_id && $product_id ) {
+    if ( $txn_id && $product_id ) {
         $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
         if ($mysqli->connect_errno) {
             error_log("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);

@@ -10,12 +10,13 @@
         <!--<meta charset="UTF-8">-->
         <title>Webshop</title>
         <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/filters.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script>
-            
-        </script>
-    </head>    
-    <body>
+    </head>
+    <body ng-controller="DownloadController as download">
         <nav class="navbar navbar-inverse navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
@@ -51,6 +52,7 @@
         <div class="container">
           <!-- Example row of columns -->
           <div class="row">
+
 <?php
 
     include_once("includes/functions.php");
@@ -68,10 +70,7 @@
             while($r = mysqli_fetch_assoc($fetch)) {
               echo "<div class='col-md-4'>";
               echo "<h2 class='item_name'>". $r["artist"] ." - ". $r["title"] ."</h2>";
-              echo "<p><form id='". $r["productID"] ."' name='downloadForm' action='download_action.php' method='post' target='_blank'>";
-              echo "<input type='hidden' name='txn_id' value='$txn_id'>";
-              echo "<input type='hidden' name='product_id' value='". $r["productID"] ."'>";
-              echo "<input type='submit' class='btn btn-primary' name='download' value='Download'><form></p>";
+              echo "<p><a class='btn btn-primary' href='download_action.php?txn_id=$txn_id&product_id=". $r["productID"] ."' target='_blank'><i class='glyphicon glyphicon-download-alt'></i></a></p>";
               echo "</div>";
             }
         }
