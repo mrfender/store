@@ -1,6 +1,6 @@
 <?php
     
-    include("includes/message.php");
+    include_once("includes/message.php");
     
 ?>
 
@@ -53,10 +53,10 @@
           <div class="row">
 <?php
 
-    include("includes/functions.php");
+    include_once("includes/functions.php");
     include("config.php");
     
-    if ( $txn_id = getPOSTGETvar('txn_id') {
+    if ( $txn_id = getPOSTGETvar('txn_id') ) {
         $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
         if ($mysqli->connect_errno) {
             error_log("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
