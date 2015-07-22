@@ -62,7 +62,7 @@
             error_log("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
         }
         
-        $fetch = $mysqli->query("SELECT * FROM tokens t INNER JOIN products p ON t.productID=p.productID WHERE t.txnID='$txn_id' AND t.elapseDT <= DATE_ADD(NOW(), INTERVAL 14 DAY)");
+        $fetch = $mysqli->query("SELECT * FROM tokens t INNER JOIN products p ON t.productID=p.productID WHERE t.txnID='$txn_id' AND NOW() < t.elapseDT");
         
         if ( $fetch->num_rows >= 1 ) {
             while($r = mysqli_fetch_assoc($fetch)) {
@@ -86,8 +86,10 @@
 ?>
           </div>
           
+          <hr>
+          
           <a href='index.html'>back to homepage</a>
-
+          
           <hr>
 
           <footer>
