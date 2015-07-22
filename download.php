@@ -1,6 +1,6 @@
 <?php
 
-    include("paypal.php");
+    print_r($_POST);
     
     if ( $txn_id = $_POST['txn_id'] ) {
         $fetch = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id' AND elapseDT < DATE_ADD(NOW(), INTERVAL 14 DAY)");
