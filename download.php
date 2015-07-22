@@ -62,7 +62,7 @@
             error_log("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
         }
         
-        $fetch = $mysqli->query("SELECT * FROM tokens t INNER JOIN products p ON t.productID=p.productID WHERE t.txnID='$txn_id' AND NOW() < t.elapseDT");
+        $fetch = $mysqli->query("SELECT * FROM tokens t INNER JOIN products p ON t.productID=p.productID WHERE t.txnID='$txn_id' AND t.elapseDT > NOW()");
         
         if ( $fetch->num_rows >= 1 ) {
             while($r = mysqli_fetch_assoc($fetch)) {
@@ -76,7 +76,8 @@
             }
         }
         else {
-            showEMessage("Uw downloads zijn verlopen!", "index.html");
+            //showEMessage("Uw downloads zijn verlopen!", "index.html");
+            echo "Uw downloads zijn verlopen!";
         }
     }
     else {
