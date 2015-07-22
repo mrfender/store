@@ -68,7 +68,7 @@
             while($r = mysqli_fetch_assoc($fetch)) {
               echo "<div class='col-md-4'>";
               echo "<h2 class='item_name'>". $r["artist"] ." - ". $r["title"] ."</h2>";
-              echo "<p><form name='downloadForm' action='download_action.php' method='post' target='_blank'>";
+              echo "<p><form name='downloadForm". $r["productID"] ."' action='download_action.php' method='post' target='_blank'>";
               echo "<input type='hidden' name='txn_id' value='$txn_id'>";
               echo "<input type='hidden' name='product_id' value='". $r["productID"] ."'>";
               echo "<input type='submit' class='btn btn-primary' name='download' value='Download'><form></p>";
