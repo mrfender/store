@@ -100,7 +100,7 @@
         };
         
         // utility methods
-        this.addFormFields = function (form, data) {
+        this.addFormFields  = function (form, data) {
             if (data != null) {
                 $.each(data, function (name, value) {
                     if (value != null) {
