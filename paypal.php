@@ -93,18 +93,6 @@
         $qResult = $mysqli->query("SELECT * FROM tokens WHERE txnID='$txn_id'");
         
         if ( $qResult->num_rows == 0 ) {
-            // e-mail versturen
-            $ms = new MailSender();
-            $ms->setSubject($subject);
-            //echo "check subject $subject<br>";
-            //$ms->setSender($emailFrom, $nameFrom);
-            $ms->setSender($emailFrom);
-            //echo "check email $email name $name<br>";
-            //echo "check receiver $receiver $receiverName<br>";
-            $ms->setReceiver($receiver, $receiverName);
-            //echo "check message $message<br>";
-            $ms->sendMultipartMail($message, nl2br($message));
-            
             if ( $item_number ) {
                 $rResult = $mysqli->query("INSERT INTO tokens(productID, createDT, elapseDT, downloads, txnID) VALUES($item_number, NOW(), DATE_ADD(NOW(), INTERVAL 14 DAY), 0, '$txn_id');");
             }
@@ -120,6 +108,19 @@
                     }
                 } 
             }
+            
+            // e-mail versturen
+            $message = "Dear ". $payer_email ."\n\nThank you for buying our songs!\n\nYou can download the songs here: http://joyproject-joystore.rhcloud.com/download.php?txn_id=$txn_id\nThe songs can be downloaded for 14 days, after this period this link is removed!\n\nYours sincerely,\nJoY Project";
+            $ms = new MailSender();
+            $ms->setSubject("Thank you for buying our songs!");
+            //echo "check subject $subject<br>";
+            //$ms->setSender($emailFrom, $nameFrom);
+            $ms->setSender($receiver_email);
+            //echo "check email $email name $name<br>";
+            //echo "check receiver $receiver $receiverName<br>";
+            $ms->setReceiver($payer_email);
+            //echo "check message $message<br>";
+            $ms->sendMultipartMail($message, nl2br($message));
         }
     } 
     else if (strcmp ($res, "INVALID") == 0) {
